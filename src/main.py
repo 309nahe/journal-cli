@@ -1,18 +1,40 @@
 import typer
+from datetime import datetime
+import subprocess
+from pathlib import Path
+import os
 
 app = typer.Typer()
 
 @app.command()
-def add(text: str = typer.Argument(None)):
-    """
-    Add a journal entry.
-    If text is given, append it.
-    If not, open vim.
-    """
-    if text:
-        print(f"Appending: {text}")
+def hello(name: str):
+    print(f"Hello {name}")
+
+@app.command()
+def goodbye(name: str, formal: bool = False):
+    if formal:
+        print(f"Goodbye Ms. {name}. Have a good day.")
     else:
-        print("Opening vim...")
+        print(f"Bye {name}!")
+
+@app.command()
+def add(entry: str = typer.Argument(None)):
+    filename = datetime.now().strftime("%Y-%m-%d") + ".md"
+    journal_dir = Path(os.path.expanduser("~/.journal"))
+    journal_dir.mkdir(exist_ok=True)
+    file_path = Path(journal_dir) / filename
+
+    
+    if entry:
+        with open(file_path, "a") as f:
+            timestamp = datetime.now().strftime("%H:%M")
+            f.write(f"## {timestamp}\n{entry}\n\n")
+        print(f"Entry '{entry}' added.")
+    else:
+        file_path.touch(exist_ok=True)
+        subprocess.run(["vim", str(file_path)])
+
+
 
 if __name__ == "__main__":
     app()
