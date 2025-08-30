@@ -59,6 +59,16 @@ def view(date: str = typer.Argument(None)):
     else:
         print(f"No entry found for {filename}")
 
+@app.command()
+def delete(date: str = typer.Argument(...)):
+    journal_dir = Path(os.path.expanduser("~/.journal"))
+    filename = f"{date}.md"
+    file_path = journal_dir / filename
+    if file_path.exists():
+        file_path.unlink()
+        print(f"Deleted entry for {date}.")
+    else:
+        print(f"No entry found for {date}.")
 
 
 if __name__ == "__main__":
