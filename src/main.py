@@ -34,6 +34,17 @@ def add(entry: str = typer.Argument(None)):
         file_path.touch(exist_ok=True)
         subprocess.run(["vim", str(file_path)])
 
+@app.command()
+def list():
+    journal_dir = Path(os.path.expanduser("~/.journal"))
+    if not journal_dir.exists():
+        print("No journal entries found.")
+        return
+
+    files = sorted(journal_dir.glob("*.md"), reverse=True)
+    for file in files:
+        print(file.name)
+
 
 
 if __name__ == "__main__":
