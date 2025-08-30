@@ -70,6 +70,24 @@ def delete(date: str = typer.Argument(...)):
     else:
         print(f"No entry found for {date}.")
 
+@app.command()
+def search(query: str = typer.Argument(...)):
+    journal_dir = Path(os.path.expanduser("~/.journal"))
+    if not journal_dir.exists():
+        print("No journal entries found.")
+        return
+
+    files = sorted(journal_dir.glob("*.md"), reverse=True)
+    found = False
+    for file in files:
+        with open(file, "r") as f:
+            content = f.read()
+            if query in content:
+                print(f"Found in {file.name}:\n{content}\n")
+                found = True
+    if not found:
+        print(f"No entries found containing '{query}'.")
+
 
 if __name__ == "__main__":
     app()
