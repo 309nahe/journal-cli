@@ -21,36 +21,33 @@ This is a quick note
 
 ## Installation
 
-Clone the repository and set up a virtual environment:
+Clone the repository:
 
 ```bash
 git clone https://github.com/yourname/journal-cli.git
 cd journal-cli
-
-python3 -m venv venv
-source venv/bin/activate
-pip install typer[all]
+Install system-wide with pip (recommended):
+pip install --user -e .
 ```
 
 ## Usage
 
-Run with Python during development:
-
 ```bash
 # Add a quick note
-python3 main.py add "hello world"
+journal add "hello world"
 
 # Open vim for today’s file
-python3 main.py add
+journal add
 
 # List existing journal files
-python3 main.py list
+journal list
 
 # Search across all journals
-python3 main.py search "world"
+journal search "world"
 
 # Delete a specific journal file (irreversible)
-python3 main.py delete 2025-08-29
+journal delete 2025-08-29
+
 ```
 
 ## Notes
