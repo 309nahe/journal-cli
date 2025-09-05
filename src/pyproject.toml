@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "journal-cli"
+version = "0.1.0"
+description = "A simple command-line journaling tool"
+dependencies = ["typer[all]"]
+
+[project.scripts]
+journal = "main:app"
