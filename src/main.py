@@ -7,24 +7,11 @@ import os
 app = typer.Typer()
 
 @app.command()
-def hello(name: str):
-    print(f"Hello {name}")
-
-@app.command()
-def goodbye(name: str, formal: bool = False):
-    if formal:
-        print(f"Goodbye Ms. {name}. Have a good day.")
-    else:
-        print(f"Bye {name}!")
-
-@app.command()
 def add(entry: str = typer.Argument(None)):
     filename = datetime.now().strftime("%Y-%m-%d") + ".md"
     journal_dir = Path(os.path.expanduser("~/.journal"))
     journal_dir.mkdir(exist_ok=True)
     file_path = Path(journal_dir) / filename
-
-    
     if entry:
         with open(file_path, "a") as f:
             timestamp = datetime.now().strftime("%H:%M")
@@ -87,7 +74,6 @@ def search(query: str = typer.Argument(...)):
                 found = True
     if not found:
         print(f"No entries found containing '{query}'.")
-
 
 if __name__ == "__main__":
     app()
